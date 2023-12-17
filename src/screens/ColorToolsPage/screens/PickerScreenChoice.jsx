@@ -4,7 +4,7 @@ import { style } from "./styles";
 import { useEffect, useRef, useState } from "react";
 import { useTabBar } from "../../../navigation/TabBarContext";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import ColorPalette from "../components/ColorPalette";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -15,11 +15,18 @@ export default function PickerScreenChoice({ route }) {
     updateTabBarStyle({ display: "none" });
   }, []);
 
+  const [dispCol, setDispCol] = useState();
+
   const { passcolor } = route.params;
- 
 
+  useEffect(() => {
+    setDispCol(route.params.passcolor);
+  }, [passcolor]);
 
-  // console.log(passcolor)
+  const updateParentState = (newValue) => {
+    setDispCol(newValue);
+    console.log("Parent", newValue);
+  };
 
   return (
     <SafeAreaView style={style.screen}>
@@ -44,11 +51,23 @@ export default function PickerScreenChoice({ route }) {
             </Text>
           </View>
         </Pressable>
-      <View style={{ width: 50, height: 50, backgroundColor: passcolor, position:"absolute", top:30, right:30 }} />
+        <View
+          style={{
+            width: 50,
+            height: 50,
+            backgroundColor: dispCol,
+            position: "absolute",
+            top: 30,
+            right: 30,
+          }}
+        />
       </View>
       <View style={{ alignSelf: "flex-end", marginBottom: 70, margin: 20 }}>
-          <ColorPalette initialBoxesPerRow={15} />
-        </View>
+        <ColorPalette
+          initialBoxesPerRow={15}
+          updateParentState={updateParentState}
+        />
+      </View>
     </SafeAreaView>
   );
 }

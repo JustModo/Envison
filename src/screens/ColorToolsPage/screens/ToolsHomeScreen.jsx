@@ -69,7 +69,7 @@ export default function ToolsHomeScreen(props) {
           <Card icon={"format-paint"} name={"Color"} />
         </ScrollView>
         <View style={{ alignSelf: "flex-end", marginBottom: 70, margin: 20 }}>
-          <ColorPalette initialBoxesPerRow={15}/>
+          <ColorPalette initialBoxesPerRow={15}  />
         </View>
       </SafeAreaView>
     </>

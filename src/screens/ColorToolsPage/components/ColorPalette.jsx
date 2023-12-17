@@ -2,9 +2,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View, StyleSheet, Dimensions, Button } from "react-native";
+import { View, StyleSheet, Dimensions, Button, Pressable } from "react-native";
 
-const ColorPalette = ({ initialBoxesPerRow}) => {
+const ColorPalette = ({ initialBoxesPerRow, updateParentState }) => {
   const [colorArray, setcolorArray] = useState([]);
   const [boxesPerRow, setBoxesPerRow] = useState(initialBoxesPerRow);
   const screenWidth = Dimensions.get("window").width;
@@ -19,7 +19,7 @@ const ColorPalette = ({ initialBoxesPerRow}) => {
       temp = temp.slice(0, maxLength);
     }
     while (temp.length < 18) {
-      temp.push('transparent');
+      temp.push("transparent");
     }
     setcolorArray(temp);
     setSavedColor(temp);
@@ -41,23 +41,16 @@ const ColorPalette = ({ initialBoxesPerRow}) => {
     }
   };
 
-  // useEffect(() => {
-  //   loadColor();
-  // }, []); // Run once on mount
-
   useFocusEffect(
     React.useCallback(() => {
       loadColor();
-      // console.log('loaded')
     }, [])
   );
-
 
   useEffect(() => {
     const savePreferences = async () => {
       try {
         await AsyncStorage.setItem("SavedColor", JSON.stringify(savedColor));
-        // console.log(`Saved/Loaded Color ${JSON.stringify(savedColor)}`);
       } catch (error) {
         console.error("Error saving preferences:", error);
       }
@@ -66,33 +59,31 @@ const ColorPalette = ({ initialBoxesPerRow}) => {
     savePreferences();
   }, [savedColor]);
 
+  const [selectedColor, setSelectedColor] = useState();
 
-  // const clearAsyncStorage = async () => {
-  //   try {
-  //     await AsyncStorage.clear();
-  //     console.log("AsyncStorage cleared successfully.");
-  //   } catch (error) {
-  //     console.error("Error clearing AsyncStorage:", error);
-  //   }
-  // };
-
-  // clearAsyncStorage()
+  useEffect(() => {
+    if (updateParentState) {
+      updateParentState(selectedColor);
+      // console.log(selectedColor);
+    }
+  }, [selectedColor, updateParentState]);
 
   return (
     <View style={styles.containerm}>
       <View style={styles.container}>
         {colorArray.length > 0 &&
           colorArray.map((color, index) => (
-            <View
-              key={index}
-              style={[
-                styles.colorBox,
-                { backgroundColor: color, width: boxWidth, height: boxWidth },
-              ]}
-            />
+            <Pressable key={index} onPress={() => setSelectedColor(color)}>
+              <View
+                key={index}
+                style={[
+                  styles.colorBox,
+                  { backgroundColor: color, width: boxWidth, height: boxWidth },
+                ]}
+              />
+            </Pressable>
           ))}
       </View>
-      {/* <Button title="Press" onPress={()=> addColor('#ffff00') }></Button> */}
     </View>
   );
 };
