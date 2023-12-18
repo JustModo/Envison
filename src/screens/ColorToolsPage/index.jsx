@@ -5,16 +5,21 @@ import PickerScreen from "./screens/PickerScreenCamera";
 import ToolsHomeScreen from "./screens/ToolsHomeScreen";
 import { Pressable } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { TransitionSpecs, HeaderStyleInterpolators } from '@react-navigation/stack';
+import {
+  TransitionSpecs,
+  HeaderStyleInterpolators,
+} from "@react-navigation/stack";
 import PickerScreenChoice from "./screens/PickerScreenChoice";
-import PickerScreenWheel from "./screens/PickerScreenWheel"
+import PickerScreenWheel from "./screens/PickerScreenWheel";
+import ThreeDScreen from "./screens/ThreeDScreen";
+import ArtCanvas from "./screens/ArtCanvas";
 
 const Stack = createStackNavigator();
 
 function ColorToolsPage({ route }) {
   return (
     <Stack.Navigator
-      initialRouteName="ToolsHome"   
+      initialRouteName="ToolsHome"
       screenOptions={{
         ...MyTransition,
         headerTitle: "",
@@ -32,12 +37,11 @@ function ColorToolsPage({ route }) {
               name="arrow-back"
               size={40}
               color={"white"}
-              style={{ margin: 10, marginLeft:30 }}
+              style={{ margin: 10, marginLeft: 30 }}
             />
           </Pressable>
         ),
       }}
-      
     >
       <Stack.Screen
         name="Palette"
@@ -68,12 +72,24 @@ function ColorToolsPage({ route }) {
         initialParams={{ navigationFromTab: true }}
         options={{ headerShown: true }}
       />
+      <Stack.Screen
+        name="3DShape"
+        component={ThreeDScreen}
+        initialParams={{ navigationFromTab: true }}
+        options={{ headerShown: true }}
+      />
+      <Stack.Screen
+        name="ArtCanvas"
+        component={ArtCanvas}
+        initialParams={{ navigationFromTab: true }}
+        options={{ headerShown: true }}
+      />
     </Stack.Navigator>
   );
 }
 
 const MyTransition = {
-  gestureDirection: 'horizontal',
+  gestureDirection: "horizontal",
   transitionSpec: {
     open: TransitionSpecs.TransitionIOSSpec,
     close: TransitionSpecs.TransitionIOSSpec,
@@ -107,8 +123,6 @@ const MyTransition = {
       },
     };
   },
-}
-
-
+};
 
 export default ColorToolsPage;

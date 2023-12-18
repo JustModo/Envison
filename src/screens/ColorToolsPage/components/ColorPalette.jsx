@@ -5,7 +5,7 @@ import { useState } from "react";
 import { View, StyleSheet, Dimensions, Button, Pressable } from "react-native";
 
 const ColorPalette = ({ initialBoxesPerRow, updateParentState }) => {
-  const [colorArray, setcolorArray] = useState([]);
+  const [colorArray, setcolorArray] = useState(["transparent"]);
   const [boxesPerRow, setBoxesPerRow] = useState(initialBoxesPerRow);
   const screenWidth = Dimensions.get("window").width;
   const containerPadding = 24;
@@ -34,7 +34,8 @@ const ColorPalette = ({ initialBoxesPerRow, updateParentState }) => {
         const parsedColors = JSON.parse(storedPreferences);
         setSavedColor(parsedColors);
         setcolorArray(parsedColors);
-        // console.log(`Set color 1 to ${JSON.stringify(parsedColors)}`);
+      } else {
+        addColor("transparent");
       }
     } catch (error) {
       console.error("Error loading colors:", error);

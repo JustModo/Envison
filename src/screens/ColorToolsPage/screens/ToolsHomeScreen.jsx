@@ -5,7 +5,7 @@ import Card from "../components/Card";
 import ColorPalette from "../components/ColorPalette";
 import { useNavigation } from "@react-navigation/native";
 import { useTabBar } from "../../../navigation/TabBarContext";
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function ToolsHomeScreen(props) {
   const navigation = useNavigation();
@@ -13,7 +13,7 @@ export default function ToolsHomeScreen(props) {
 
   useFocusEffect(
     React.useCallback(() => {
-      updateTabBarStyle({ display: 'flex' });
+      updateTabBarStyle({ display: "flex" });
     }, [])
   );
 
@@ -65,11 +65,19 @@ export default function ToolsHomeScreen(props) {
           >
             References
           </Text>
-          <Card icon={"lightbulb"} name={"Light"} />
-          <Card icon={"format-paint"} name={"Color"} />
+          <Card
+            icon={"lightbulb"}
+            name={"Light"}
+            onPress={() => navigation.navigate("3DShape")}
+          />
+          <Card
+            icon={"format-paint"}
+            name={"Color"}
+            onPress={() => navigation.navigate("ArtCanvas")}
+          />
         </ScrollView>
         <View style={{ alignSelf: "flex-end", marginBottom: 70, margin: 20 }}>
-          <ColorPalette initialBoxesPerRow={15}  />
+          <ColorPalette initialBoxesPerRow={15} />
         </View>
       </SafeAreaView>
     </>

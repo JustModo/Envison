@@ -24,13 +24,12 @@ export default function PaletteScreen() {
   }, [dispCol]);
 
   useEffect(() => {
-    console.log(colors);
+    // console.log(colors);
   }, [colors]);
 
   function hexToRgb(hex, callback) {
     if (!hex) return;
     hex = hex.replace("#", "");
-    // console.log(hex);
 
     const bigint = parseInt(hex, 16);
 
@@ -47,15 +46,15 @@ export default function PaletteScreen() {
     const b = rgb.b / 255;
 
     const totalIntensity = r + g + b;
-    console.log(totalIntensity);
-    const redAmount = (r / totalIntensity) * 100;
-    const blueAmount = (b / totalIntensity) * 100;
-    const yellowAmount = ((r + g) / totalIntensity) * 100;
+    // console.log(totalIntensity);
+    const redAmount = Math.floor((r / totalIntensity) * 100);
+    const blueAmount = Math.floor((b / totalIntensity) * 100);
+    const greenAmount = Math.floor((g / totalIntensity) * 100);
 
     return {
       redAmount,
       blueAmount,
-      yellowAmount,
+      greenAmount,
     };
   }
 
@@ -82,30 +81,41 @@ export default function PaletteScreen() {
         <View style={styles3.colordd}>
           <View style={[styles3.colorsqr, { backgroundColor: dispCol }]} />
           <Text style={styles3.colorddt}>
-            {dispCol === "transparent" ? "Choose" : dispCol}
+            {!dispCol || dispCol.trim() === "" || dispCol === "transparent"
+              ? "Choose"
+              : dispCol}
           </Text>
         </View>
         <ColorPalette
           initialBoxesPerRow={10}
           updateParentState={updateParentState}
         />
-        <View style={styles3.instructdiv}>
-          <Text style={[styles3.heading, { fontSize: 35, marginBottom: 10 }]}>
-            Instructions
-          </Text>
-          <Text style={styles3.heading}>Step 1:</Text>
-          <Text style={styles3.instructText}>
-            eofneosignioewsaghpehagosrnogkhrehjgdokreopkge
-          </Text>
-          <Text style={styles3.heading}>Step 2:</Text>
-          <Text style={styles3.instructText}>
-            eofneosignioewsaghpehagosrnogkhrehjgdokreopkge
-          </Text>
-          <Text style={styles3.heading}>Step 3:</Text>
-          <Text style={styles3.instructText}>
-            eofneosignioewsaghpehagosrnogkhrehjgdokreopkge
-          </Text>
-        </View>
+        {!dispCol ||
+        dispCol.trim() === "" ||
+        dispCol === "transparent" ? null : (
+          <View style={styles3.instructdiv}>
+            <Text
+              style={[
+                styles3.heading,
+                { fontSize: 35, marginBottom: 20, alignSelf: "center" },
+              ]}
+            >
+              Instructions
+            </Text>
+            <Text style={styles3.heading}>Step 1:</Text>
+            <Text style={styles3.instructText}>
+              {colors ? `Add ${colors.redAmount}% of Red` : ""}
+            </Text>
+            <Text style={styles3.heading}>Step 2:</Text>
+            <Text style={styles3.instructText}>
+              {colors ? `Add ${colors.blueAmount}% of Blue` : ""}
+            </Text>
+            <Text style={styles3.heading}>Step 3:</Text>
+            <Text style={styles3.instructText}>
+              {colors ? `Add ${colors.greenAmount}% of Green` : ""}
+            </Text>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -129,8 +139,9 @@ const styles3 = StyleSheet.create({
   heading: {
     textAlign: "left",
     color: "white",
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: "bold",
+    marginBottom: 10,
   },
   instructText: {
     textAlign: "left",

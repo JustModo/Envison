@@ -1,15 +1,21 @@
 import * as ImagePicker from "expo-image-picker";
 import React, { useEffect, useRef, useState } from "react";
 import { Camera } from "expo-camera";
-import { View, Text, StyleSheet, Button, Image, requireNativeComponent } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  Image,
+  requireNativeComponent,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { style } from "./styles";
 import { useTabBar } from "../../../navigation/TabBarContext";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImageManipulator from "expo-image-manipulator";
-import { decode } from "base-64";
-
+// import { decode } from "base-64";
 
 export default function PickerScreen() {
   const navigation = useNavigation();
@@ -96,29 +102,28 @@ export default function PickerScreen() {
           ],
           { compress: 1, format: "jpeg", base64: true }
         );
-        console.log(manimg.base64);
-        console.log(manimg.uri);
-        console.log(manimg.width, manimg.height);
+        // console.log(manimg.base64);
+        // console.log(manimg.uri);
+        // console.log(manimg.width, manimg.height);
         setImageURI(manimg.uri);
-        const arr = base64ToUint8Array(manimg.base64);
-        console.log(arr);
+        // const arr = base64ToUint8Array(manimg.base64);
+        // console.log(arr);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  function base64ToUint8Array(base64) {
-    const binaryString = decode(base64);
-    const uint8Array = new Uint8Array(binaryString.length);
+  // function base64ToUint8Array(base64) {
+  //   const binaryString = decode(base64);
+  //   const uint8Array = new Uint8Array(binaryString.length);
 
-    for (let i = 0; i < binaryString.length; i++) {
-      uint8Array[i] = binaryString.charCodeAt(i);
-    }
+  //   for (let i = 0; i < binaryString.length; i++) {
+  //     uint8Array[i] = binaryString.charCodeAt(i);
+  //   }
 
-    return uint8Array;
-  }
-
+  //   return uint8Array;
+  // }
 
   //---------------------------------------
 
@@ -141,7 +146,7 @@ export default function PickerScreen() {
         </Camera>
         <Button onPress={takePicture} title="Pick Color" />
         <Button onPress={() => handlePress(hexcolor)} width={50} title="Save" />
-        <View
+        {/* <View
           style={{
             backgroundColor: hexcolor,
             height: 50,
@@ -150,11 +155,16 @@ export default function PickerScreen() {
             alignSelf: "center",
             marginTop: 30,
           }}
-        />
+        /> */}
         {imageURI ? (
           <Image
             source={{ uri: imageURI }}
-            style={{ width: 100, height: 100 }}
+            style={{
+              width: 100,
+              height: 100,
+              alignSelf: "center",
+              marginTop: 60,
+            }}
           />
         ) : null}
       </View>
@@ -168,7 +178,7 @@ const styles = StyleSheet.create({
   },
   camera: {
     height: "50%",
-    maxHeight: "70%",
+    maxHeight: "60%",
     alignItems: "center",
     justifyContent: "center",
     flex: 1,

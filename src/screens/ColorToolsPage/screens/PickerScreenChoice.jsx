@@ -6,7 +6,6 @@ import { useTabBar } from "../../../navigation/TabBarContext";
 import React from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import ColorPalette from "../components/ColorPalette";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function PickerScreenChoice({ route }) {
   const navigation = useNavigation();
@@ -21,11 +20,12 @@ export default function PickerScreenChoice({ route }) {
 
   useEffect(() => {
     setDispCol(route.params.passcolor);
+    // console.log("work");
   }, [passcolor]);
 
   const updateParentState = (newValue) => {
     setDispCol(newValue);
-    console.log("Parent", newValue);
+    // console.log("Parent", newValue);
   };
 
   return (
@@ -62,7 +62,7 @@ export default function PickerScreenChoice({ route }) {
           }}
         />
       </View>
-      <View style={{ alignSelf: "flex-end", marginBottom: 70, margin: 20 }}>
+      <View style={{ alignSelf: "flex-end", margin: 20 }}>
         <ColorPalette
           initialBoxesPerRow={15}
           updateParentState={updateParentState}
