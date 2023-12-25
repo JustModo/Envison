@@ -10,6 +10,7 @@ const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
   const { tabBarStyle } = useTabBar();
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -35,7 +36,7 @@ const AppNavigator = () => {
           flex: 1,
           alignContent: "center",
           justifyContent: "center",
-          ...tabBarStyle
+          ...tabBarStyle,
         },
       })}
     >
@@ -92,6 +93,7 @@ const AppNavigator = () => {
         component={ForumPage}
         initialParams={{ navigationFromTab: true }}
         options={{
+          gestureEnabled:false,
           tabBarLabel: "",
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="forum" size={30} color={color} />
