@@ -93,7 +93,7 @@ const AppNavigator = () => {
         component={ForumPage}
         initialParams={{ navigationFromTab: true }}
         options={{
-          gestureEnabled:false,
+          gestureEnabled: false,
           tabBarLabel: "",
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="forum" size={30} color={color} />

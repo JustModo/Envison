@@ -16,8 +16,8 @@ export default function Register() {
     if (username != "" && password != "" && cpassword != "") {
       if (password === cpassword) {
         if (await handleRegister(username, password)) {
-          if(await handleLogin(username, password)){
-            navigation.navigate("Post")
+          if (await handleLogin(username, password)) {
+            navigation.navigate("Post");
           }
         }
       } else {
@@ -29,9 +29,11 @@ export default function Register() {
   }
   return (
     <SafeAreaView style={style.screen}>
-      <View style={style.container}>
+      <View style={[style.container, { overflow: "hidden" }]}>
         <View style={style1.con1}>
-          <Text style={[style1.heading, { marginTop: 50 }]}>Register</Text>
+          <View>
+            <Text style={[style1.heading, { marginTop: 50 }]}>Register</Text>
+          </View>
           <View style={style1.con11}>
             <TextInput
               style={style1.textinput}
@@ -97,7 +99,7 @@ const style1 = StyleSheet.create({
   con1: {
     alignItems: "center",
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: "space-evenly",
     flexDirection: "column",
   },
   heading: {
@@ -105,6 +107,7 @@ const style1 = StyleSheet.create({
     fontSize: 40,
     fontWeight: "bold",
     alignSelf: "center",
+    marginBottom: 50,
   },
   textinput: {
     color: "black",
@@ -125,8 +128,7 @@ const style1 = StyleSheet.create({
     justifyContent: "center",
   },
   con11: {
-    marginTop: 180,
-    flex: 1,
+    justifyContent: "space-between", // Align children with space in between
     rowGap: 30,
   },
 });

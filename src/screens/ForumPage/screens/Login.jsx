@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  BackHandler,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { style } from "../styles";
 import { TextInput } from "react-native-gesture-handler";
@@ -12,23 +18,34 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("beforeRemove", (e) => {
-      if (!isFocused) {
-        return;
-      }
-      e.preventDefault();
-    });
+  // useEffect(() => {
+  //   const clearKey = async () => {
+  //     await AsyncStorage.setItem("TOKEN", "");
+  //   };
+  //   clearKey();
+  // }, []);
 
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        return true;
+      }
+    );
     return () => {
-      unsubscribe();
+      backHandler.remove();
     };
   }, [navigation, isFocused]);
 
-  function handleLoginClick() {
+  async function handleLoginClick() {
     if (username != "" && password != "") {
-      if (handleLogin(username, password)) {
+      const res = await handleLogin(username, password);
+      console.log(res);
+      if (res == true) {
         navigation.navigate("Post");
+      } else if (res === "Request timed out") {
+        BackHandler.removeEventListener("hardwareBackPress", false);
+        navigation.navigate("Error");
       }
     } else {
       alert("Can't Leave Blank");
