@@ -1,4 +1,5 @@
 Envision Art
+
 Welcome to Envision Art, an innovative mobile application designed to make the world of art accessible to both visually impaired individuals and beginners in the art world. Our app is built with a focus on simplicity and accessibility, providing a groundbreaking tool for learning and exploring art.
 
 Features
