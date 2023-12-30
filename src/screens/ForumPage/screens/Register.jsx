@@ -32,7 +32,9 @@ export default function Register() {
       <View style={[style.container, { overflow: "hidden" }]}>
         <View style={style1.con1}>
           <View>
-            <Text style={[style1.heading, { marginTop: 50 }]}>Register</Text>
+            <Text style={[style1.heading, { marginTop: 50, marginBottom: 10 }]}>
+              Register
+            </Text>
           </View>
           <View style={style1.con11}>
             <TextInput
@@ -129,6 +131,6 @@ const style1 = StyleSheet.create({
   },
   con11: {
     justifyContent: "space-between", // Align children with space in between
-    rowGap: 30,
+    rowGap: 20,
   },
 });

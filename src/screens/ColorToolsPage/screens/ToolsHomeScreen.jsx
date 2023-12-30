@@ -73,7 +73,9 @@ export default function ToolsHomeScreen(props) {
           <Card
             icon={"format-paint"}
             name={"Color"}
-            onPress={() => navigation.navigate("ArtCanvas")}
+            onPress={() => {
+              /*navigation.navigate("ArtCanvas")*/
+            }}
           />
         </ScrollView>
         <View style={{ alignSelf: "flex-end", marginBottom: 70, margin: 20 }}>

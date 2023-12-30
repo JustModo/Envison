@@ -3,11 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { Camera } from "expo-camera";
 import {
   View,
-  Text,
   StyleSheet,
   Button,
   Image,
-  requireNativeComponent,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { style } from "./styles";

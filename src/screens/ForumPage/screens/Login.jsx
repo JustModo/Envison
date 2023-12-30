@@ -54,9 +54,11 @@ export default function Login() {
 
   return (
     <SafeAreaView style={style.screen}>
-      <View style={style.container}>
+      <View style={[style.container, { overflow: "scroll" }]}>
         <View style={style1.con1}>
-          <Text style={[style1.heading, { marginTop: 50 }]}>Login</Text>
+          <Text style={[style1.heading, { marginTop: 40, marginBottom: 10 }]}>
+            Login
+          </Text>
           <View style={style1.con11}>
             <TextInput
               style={style1.textinput}
@@ -99,6 +101,7 @@ export default function Login() {
                 alignSelf: "center",
                 fontWeight: "bold",
                 fontSize: 15,
+                marginTop: 20,
               }}
               onPress={() => navigation.navigate("Register")}
             >
@@ -115,7 +118,7 @@ const style1 = StyleSheet.create({
   con1: {
     alignItems: "center",
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: "space-evenly",
     flexDirection: "column",
   },
   heading: {
@@ -123,6 +126,7 @@ const style1 = StyleSheet.create({
     fontSize: 40,
     fontWeight: "bold",
     alignSelf: "center",
+    marginBottom: 50,
   },
   textinput: {
     color: "black",
@@ -143,8 +147,7 @@ const style1 = StyleSheet.create({
     justifyContent: "center",
   },
   con11: {
-    marginTop: 200,
-    flex: 1,
-    rowGap: 30,
+    justifyContent: "space-between", // Align children with space in between
+    rowGap: 20,
   },
 });

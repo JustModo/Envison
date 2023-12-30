@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { style } from "../styles";
-import { fetchData } from "../api";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ForumScreen() {
   const navigation = useNavigation();

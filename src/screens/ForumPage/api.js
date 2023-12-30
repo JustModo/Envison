@@ -1,13 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 const baseUrl = "https://envision.kosh-web.cfd";
-// const baseUrl = "https://envision.kosh-web.cfd";
-
-// const baseUrl = AsyncStorage.getItem("BASEURL");
-// let baseUrl;
 
 export const pingServer = async () => {
-  // baseUrl = url;
   try {
     const responsePromise = axios.get(`${baseUrl}/ping`);
 
@@ -61,7 +56,7 @@ export const handleLogin = async (username, password) => {
     yourAuthToken = data.token;
     await AsyncStorage.setItem("TOKEN", yourAuthToken);
     await AsyncStorage.setItem("ONLINEUSERNAME", username);
-    console.log("Login successful. Token:", yourAuthToken);
+    // console.log("Login successful. Token:", yourAuthToken);
     return true;
   } catch (error) {
     if (error.message === "Request timed out") {
@@ -116,9 +111,11 @@ export const getPosts = async (id) => {
       throw new Error(`${errorMessage}`);
     }
     const data = await response.json();
+    // console.log(data);
     return data;
   } catch (error) {
-    alert(error.message);
+    alert("Failed to get Posts!");
+    return false;
   }
 };
 
@@ -199,7 +196,7 @@ async function submitPost(image, mdata) {
 
     if (!response.ok) {
       const errorMessage = await response.text();
-      localStorage.setItem("err", errorMessage);
+      // localStorage.setItem("err", errorMessage);
       throw new Error(`${errorMessage}`);
     }
 
@@ -213,3 +210,61 @@ async function submitPost(image, mdata) {
     return false;
   }
 }
+
+export const getComment = async (id) => {
+  if (!id) {
+    console.error("No ID");
+  }
+  const postid = id;
+  const authkey = await AsyncStorage.getItem("TOKEN");
+  try {
+    const response = await fetch(`${baseUrl}/getcomment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authkey}`,
+      },
+      body: JSON.stringify({ postid }),
+    });
+
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      throw new Error(`${errorMessage}`);
+    }
+    const data = await response.json();
+    // console.log(data);
+    return data;
+  } catch (error) {
+    alert("Failed to get Comments!");
+    return false;
+  }
+};
+
+export const addComment = async (id, content) => {
+  if (!id || !content) {
+    console.error("Missing Params!");
+  }
+  const postid = id;
+  const comment = content;
+  const authkey = await AsyncStorage.getItem("TOKEN");
+  try {
+    const response = await fetch(`${baseUrl}/addcomment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authkey}`,
+      },
+      body: JSON.stringify({ postid, comment }),
+    });
+
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      throw new Error(`${errorMessage}`);
+    }
+    const data = await response.text();
+    return data;
+  } catch (error) {
+    alert("Failed to Comment!");
+    return false;
+  }
+};

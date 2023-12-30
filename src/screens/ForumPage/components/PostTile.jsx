@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import SquareButton from "./SquareButton";
 import { fetchImage, toggleLike } from "../api";
+import { useNavigation } from "@react-navigation/native";
 
 export default function PostTile(props) {
   const [authName, setAuthName] = useState(props.user);
@@ -13,6 +14,7 @@ export default function PostTile(props) {
   const [noliked, setNoLiked] = useState(props.likes.Likes);
   const [liked, setLiked] = useState(props.likes.IsLiked);
   const [imageData, setImageData] = useState(null);
+  const navigation = useNavigation();
 
   const handleLike = async () => {
     if (liked == false) {
@@ -26,6 +28,9 @@ export default function PostTile(props) {
   };
   function handleComment() {
     console.log("Comment");
+    navigation.navigate("AddComment", {
+      postID,
+    });
   }
 
   useEffect(() => {
@@ -131,8 +136,6 @@ const style = StyleSheet.create({
     height: 60,
     flexDirection: "row",
     justifyContent: "space-around",
-    // marginBottom: 10,
-    // marginTop: 10,
     padding: 5,
     borderTopWidth: 2,
     borderColor: "#ffffff",

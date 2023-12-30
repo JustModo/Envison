@@ -12,7 +12,8 @@
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
-      ]
+      ],
+      "react-native-background-fetch"
     ],
     "splash": {
       "image": "./assets/splash.png",
@@ -30,12 +31,7 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#000000"
       },
-      "package": "com.justmodo.Envision",
-      "config": {
-        "cleartext": {
-          "include": ["*"]
-        }
-      }
+      "package": "com.justmodo.Envision"
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -14,6 +14,7 @@ import AddPostPage from "./screens/AddPostPage";
 
 const Stack = createStackNavigator();
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import CommentPage from "./screens/CommentPage";
 
 function ForumPage(props) {
   return (
@@ -67,6 +68,31 @@ function ForumPage(props) {
           },
           headerTransparent: true,
           headerTitle: "Add Post",
+          headerTintColor: "white",
+          headerLeft: (props) => (
+            <Pressable {...props}>
+              <MaterialIcons
+                name="arrow-back"
+                size={40}
+                color={"white"}
+                style={{ margin: 10, marginLeft: 30 }}
+              />
+            </Pressable>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="AddComment"
+        component={CommentPage}
+        options={{
+          headerShown: true,
+          gestureEnabled: false,
+          ...TransitionPresets.FadeFromBottomAndroid,
+          headerStyle: {
+            backgroundColor: "transparent",
+          },
+          headerTransparent: true,
+          headerTitle: "Comments",
           headerTintColor: "white",
           headerLeft: (props) => (
             <Pressable {...props}>

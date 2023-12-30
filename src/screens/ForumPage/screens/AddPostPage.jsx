@@ -79,16 +79,21 @@ export default function AddPostPage() {
   };
 
   async function handlePostClick() {
-    if (!title || !content || !imageData) {
-      alert("Can't Leave Fields Blank!");
-      return;
-    }
-    const res = await uploadImage(imageData, { title, content });
-    if (res) {
-      alert(res);
-      navigation.navigate("Post");
+    if (!isDisabled) {
+      if (!title || !content || !imageData) {
+        alert("Can't Leave Fields Blank!");
+        return;
+      }
+      setIsDisabled(true);
+      const res = await uploadImage(imageData, { title, content });
+      if (res) {
+        alert(res);
+        navigation.navigate("Post");
+      }
     }
   }
+
+  const [isDisabled, setIsDisabled] = useState(false);
 
   return (
     <SafeAreaView style={style.screen}>
@@ -133,8 +138,8 @@ export default function AddPostPage() {
             ]}
             placeholder="Title"
             placeholderTextColor={"rgb(177, 186, 196)"}
-            value={content}
-            onChangeText={handleContentChange}
+            value={title}
+            onChangeText={handleTextChange}
           />
           <TextInput
             style={[
@@ -150,8 +155,8 @@ export default function AddPostPage() {
             ]}
             multiline
             textAlignVertical="top"
-            value={title}
-            onChangeText={handleTextChange}
+            value={content}
+            onChangeText={handleContentChange}
             placeholder="Description"
             placeholderTextColor={"rgb(177, 186, 196)"}
           />
@@ -165,7 +170,11 @@ export default function AddPostPage() {
         >
           <TouchableOpacity onPress={() => handlePostClick()}>
             <View style={style.btnview}>
-              <MaterialIcons name={"send"} size={30} color={"white"} />
+              <MaterialIcons
+                name={isDisabled ? "clock" : "send"}
+                size={30}
+                color={isDisabled ? "grey" : "white"}
+              />
             </View>
           </TouchableOpacity>
         </View>
@@ -193,6 +202,7 @@ export const style = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 2,
     borderColor: "#ffffff",
+    // marginTop: 10,
     // marginBottom: 70,
   },
   textinput: {

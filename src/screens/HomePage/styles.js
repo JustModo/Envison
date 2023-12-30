@@ -9,6 +9,7 @@ export const style = StyleSheet.create({
     flexDirection: "column",
     position: "relative",
     rowGap: 10,
+    paddingTop: 10,
   },
   image: {
     position: "absolute",
@@ -24,7 +25,7 @@ export const style = StyleSheet.create({
     flex: 1,
     backgroundColor: "transparent",
     flexDirection: "column",
-    padding: 20,
+    padding: 10,
     borderRadius: 20,
     borderWidth: 2,
     borderColor: "#ffffff",

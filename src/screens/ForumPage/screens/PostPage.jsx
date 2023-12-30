@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -39,6 +39,10 @@ export default function PostScreen() {
 
     try {
       const res = await getPosts();
+      if (!res) {
+        BackHandler.removeEventListener("Error", false);
+        navigation.navigate("Post");
+      }
       setPostData([]);
       setPostData(res.data || []);
       setIsEnd(false);
@@ -85,13 +89,18 @@ export default function PostScreen() {
   async function handleOldPosts() {
     try {
       let index = postData[postData.length - 1];
+      // console.log(index);
       const res = await getPosts(index.PostID);
+      // console.log(postData);
+
       // console.log(index.PostID);
-      // console.log(res);
+      console.log(postData.map((post) => post.PostID));
       if (res.data == "") {
         console.log("Blank");
         setIsEnd(true);
       } else {
+        console.log("Loaded Old Posts");
+        scrollToTop();
         setPostData(res.data || []);
         // console.log(res.data);
       }
@@ -110,6 +119,16 @@ export default function PostScreen() {
     BackHandler.removeEventListener("hardwareBackPress", false);
     navigation.navigate("AddPost");
   }
+
+  const scrollViewRef = useRef();
+
+  const scrollToTop = () => {
+    scrollViewRef.current.scrollTo({
+      x: 0,
+      y: 0,
+      animated: true,
+    });
+  };
 
   return (
     <SafeAreaView style={style.screen}>
@@ -146,6 +165,7 @@ export default function PostScreen() {
               colors={["#000000"]} // Customize the loading spinner color
             />
           }
+          ref={scrollViewRef}
         >
           {postData.map((post) => (
             <PostTile
